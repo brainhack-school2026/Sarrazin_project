@@ -38,45 +38,33 @@ Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian
 
 ## Pipeline Overview
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        INPUT                                     │
-│              Clean T2w NIfTI volume (ds005616)                  │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │  2D FFT
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      CLEAN K-SPACE                               │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │
-              ┌─────────────┼─────────────┐
-              │             │             │
-              ▼             ▼             ▼
-        Phase ramp    Cartesian      Complex
-        (motion)    undersampling    Gaussian
-          A, f_r        (R)          noise
-                                     (SNR)
-              │             │             │
-              └─────────────┼─────────────┘
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   CORRUPTED K-SPACE                              │
-│              (real + imaginary channels)                         │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                    2D U-NET                                      │
-│         Input:  (2, H, W) — corrupted k-space                   │
-│         Output: (2, H, W) — corrected k-space                   │
-└───────────────────────────┬─────────────────────────────────────┘
-                            │  iFFT
-                            ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                   RECONSTRUCTED IMAGE                            │
-└─────────────────────────────────────────────────────────────────┘
-```
+```mermaid
+flowchart TD
+    A[Clean T2w NIfTI volume\nds005616]:::input
+    B[Clean K-space\n2D FFT]:::kspace
+    C[️Phase Ramp\nMotion · A, f_r]:::corrupt
+    D[Cartesian Undersampling\nFactor R]:::corrupt
+    E[Complex Gaussian Noise\nSNR dB]:::corrupt
+    F[Corrupted K-space\nreal + imaginary channels]:::kspace
+    G[2D U-Net\nInput/Output · 2, H, W]:::model
+    H[Reconstructed Image\niFFT]:::output
 
+    A -->|2D FFT| B
+    B --> C
+    B --> D
+    B --> E
+    C --> F
+    D --> F
+    E --> F
+    F --> G
+    G -->|iFFT| H
+
+    classDef input    fill:#4A90D9,stroke:#2C5F8A,color:#fff,rx:8
+    classDef kspace   fill:#7B68EE,stroke:#4B3FA0,color:#fff,rx:8
+    classDef corrupt  fill:#E8A838,stroke:#B07820,color:#fff,rx:8
+    classDef model    fill:#50C878,stroke:#2E8B57,color:#fff,rx:8
+    classDef output   fill:#FF6B6B,stroke:#CC3333,color:#fff,rx:8
+```
 ### Corruption Parameters
 
 | Parameter | Range | Description |
