@@ -20,7 +20,7 @@ that's are more and more used because MRI has a long acquisition time, so un und
 
 
 Rather than working in image space, the model operates on **complex k-space data** (real + imaginary channels),
- which is more faithful to the actual acquisition process and allows correction before reconstruction.
+which is more faithful to the actual acquisition process and allows correction before reconstruction.
 
 ---
 
@@ -41,13 +41,13 @@ Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian
 ```mermaid
 flowchart TD
     A[Clean T2w NIfTI volume\nds005616]:::input
-    B[Clean K-space\n2D FFT]:::kspace
-    C[️Phase Ramp\nMotion · A, f_r]:::corrupt
+    B[Clean K-space]:::kspace
+    C[️Phase Ramp\nMotion : A, f]:::corrupt
     D[Cartesian Undersampling\nFactor R]:::corrupt
     E[Complex Gaussian Noise\nSNR dB]:::corrupt
     F[Corrupted K-space\nreal + imaginary channels]:::kspace
-    G[2D U-Net\nInput/Output · 2, H, W]:::model
-    H[Reconstructed Image\niFFT]:::output
+    G[2D U-Net\nInput/Output : 2, H, W]:::model
+    H[Reconstructed Image]:::output
 
     A -->|2D FFT| B
     B --> C
@@ -65,39 +65,8 @@ flowchart TD
     classDef model    fill:#50C878,stroke:#2E8B57,color:#fff,rx:8
     classDef output   fill:#FF6B6B,stroke:#CC3333,color:#fff,rx:8
 ```
-### Corruption Parameters
-
-| Parameter | Range | Description |
-|---|---|---|
-| A | 2.0, 5.0, 8.0 px | Motion amplitude |
-| f | 12, 15, 18 breaths/min | Respiratory rate |
-| R | 2, 4, 6 | Undersampling factor |
-| SNR | 15, 20, 25 dB | Signal-to-noise ratio |
-
-Total combinations: **81 per slice** → 231,417 training samples across 56 subjects.
 
 ---
-
-## Dataset
-
-This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), available on OpenNeuro:
-
-> [https://openneuro.org/datasets/ds005616/versions/1.1.2](https://openneuro.org/datasets/ds005616/versions/1.1.2)
-
-- **Modality**: T2-weighted sagittal whole-spine MRI
-- **Subjects**: 56
-- **Resolution**: varies across subjects (227–424 × 599–729 px)
-- **Format**: NIfTI (.nii.gz), BIDS-compliant
-
-### Data access via Datalad
-
-```bash
-datalad install https://github.com/OpenNeuroDatasets/ds005616.git
-datalad get sub-*/anat/sub-*_T2w.nii.gz
-```
-
----
-
 ## Repository Structure
 
 ```
@@ -121,97 +90,47 @@ Sarrazin_project/
 │   └── splits.json                    # Train/val/test subject splits (70/15/15)
 │
 ├── results/
-│   ├── fulln_v2/
+│   ├── full_run/
 │   │   ├── unet_best.pt               # Best model checkpoint
 │   │   ├── training_history.csv       # Metrics per epoch
-│   │   └── checkpoint_epoch*.pt       # Periodic checkpoints
-│   └── figures/                       # Generated figures
+│   └── figures_example/                       # Generated figures
 │
 ├── train_full.sh                      # SLURM job script (Alliance Canada)
 └── README.md
 ```
 
 ---
+## Dataset
 
-## Installation
+This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), available on OpenNeuro:
 
-### Requirements
+> [https://openneuro.org/datasets/ds005616/versions/1.1.2](https://openneuro.org/datasets/ds005616/versions/1.1.2)
 
-- Python 3.10
-- PyTorch ≥ 2.0
-- CUDA (for GPU training)
+- **Modality**: T2-weighted sagittal whole-spine MRI
+- **Subjects**: 56
+- **Resolution**: 1 mm³
+- **Format**: NIfTI (.nii.gz), BIDS-compliant
 
-### Setup
+### Data access via Datalad
 
 ```bash
-# Clone the repository
-git clone https://github.com/annaellesarrazin/Sarrazin_project.git
-cd Sarrazin_project
-
-# Create conda environment
-conda create -n brainhack python=3.10
-conda activate brainhack
-
-# Install dependencies
-pip install torch torchvision
-pip install nibabel numpy pandas matplotlib scikit-image
-pip install neurokit2 scipy pybids joblib tqdm
+datalad install https://github.com/OpenNeuroDatasets/ds005616.git
+datalad get sub-*/anat/sub-*_T2w.nii.gz
 ```
-
 ---
 
-## Usage
+### Corruption Parameters
 
-### 1. Generate the manifest
+A training dataset was generated my varying the corruption paramters: 
 
-Run the manifest generation cells in `notebooks/Kspace_corruption_simulation_vf.ipynb`.
+| Parameter | Range | Description |
+|---|---|---|
+| A | 2.0, 5.0, 8.0 px | Motion amplitude |
+| f | 12, 15, 18 breaths/min | Respiratory rate |
+| R | 2, 4, 6 | Undersampling factor |
+| SNR | 15, 20, 25 dB | Signal-to-noise ratio |
 
-This creates `training_data/manifest_v2.csv` with one row per (subject × slice × corruption combo).
-
-### 2. Train the model
-
-**Local test (2 subjects, 1 epoch):**
-
-```bash
-python src/Unet_train.py \
-    --data_root /path/to/Sarrazin_project \
-    --manifest  training_data/manifest_small.csv \
-    --splits    training_data/splits.json \
-    --output    results/test_run \
-    --epochs    1 \
-    --batch_size 4
-```
-
-**Alliance Canada (Narval):**
-
-```bash
-sbatch train_full.sh
-```
-
-Monitor training:
-
-```bash
-tail -f logs/unet_*.out
-```
-
-### 3. Inference & visualization
-
-Open `notebooks/Unet_inference.ipynb` and set:
-
-```python
-MODEL_PATH  = Path('results/full_run/unet_best.pt')
-SPLITS_PATH = Path('training_data/splits.json')
-```
-
-Run all cells to visualize GT | Corrupted | Reconstructed for validation subjects.
-
-### 4. Analyze training
-
-Open `notebooks/Unet_analysis.ipynb` and set:
-
-```python
-HISTORY_PATH = Path('results/full_run/training_history.csv')
-```
+Total combinations: **81 per slice** → 231,417 training samples across 56 subjects.
 
 ---
 
@@ -236,6 +155,104 @@ Output (2, H, W) — real & imaginary corrected k-space
 - **Optimizer**: Adam (lr=1e-3)
 - **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5)
 - **Input normalization**: divided by max(|clean k-space|)
+
+---
+
+## Installation & Training
+
+The following set-up use the server Narval on Alliance Canada, you can change it to the server nam who want to use
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/annaellesarrazin/Sarrazin_project.git
+cd Sarrazin_project
+```
+
+### 2. Set up the environment
+
+```bash
+conda create -n brainhack python=3.10
+conda activate brainhack
+pip install -r requirements.txt
+```
+
+### 3. Download the dataset
+
+```bash
+datalad install https://github.com/OpenNeuroDatasets/ds005616.git
+cd ds005616
+datalad get sub-*/anat/sub-*_T2w.nii.gz
+cd ..
+```
+
+### 4. Transfer data to Alliance Canada (Narval)
+
+```bash
+rsync -av --progress \
+    /path/to/Sarrazin_project/ \
+    username@narval.alliancecan.ca:/scratch/username/Sarrazin_project/
+```
+
+### 5. Set up the environment on Narval
+
+```bash
+# Connect to Narval
+ssh username@narval.alliancecan.ca
+
+# Load Python module
+module load python/3.10
+
+# Create virtual environment
+virtualenv ~/brainhack/brainhack
+source ~/brainhack/brainhack/bin/activate
+
+# Install dependencies
+pip install torch torchvision
+pip install -r requirements.txt
+```
+
+### 5. Train on Narval
+
+```bash
+# Connect to Narval
+ssh username@narval.alliancecan.ca
+
+# Go to the folder Sarrazin_project
+cd /scratch/username/Sarrazin_project
+
+# Submit the job — environment activation is handled by train_full.sh
+sbatch train_full.sh
+
+# Monitor training
+squeue -u $USER          # check job status
+tail -f logs/unet_*.out  # follow live logs
+```
+
+### 6. Retrieve results
+
+```bash
+# From your local machine
+scp username@narval.alliancecan.ca:/scratch/username/Sarrazin_project/results/full_run/{unet_best.pt,training_history.csv} \
+    results/
+```
+
+### 7. Inference & visualization
+
+Open `notebooks/Unet_inference.ipynb` and set:
+
+```python
+MODEL_PATH  = Path('results/unet_best.pt')
+SPLITS_PATH = Path('training_data/splits.json')
+```
+
+### 8. Analyze training
+
+Open `notebooks/Unet_analysis.ipynb` and set:
+
+```python
+HISTORY_PATH = Path('results/training_history.csv')
+```
 
 ---
 
