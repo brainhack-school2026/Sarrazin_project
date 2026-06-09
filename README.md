@@ -1,6 +1,10 @@
-# Deep Learning brathing-induced artifact correction for accelerated MRI
+# Deep Learning breathing-induced artifact correction on k-space for accelerated MRI
 
-Hi! 
+🚨 Add figures
+---
+## Introduction
+
+Hi!
 
 This project was developed during the Brainhack School 2026 at Polytechnique Montréal.
 
@@ -14,33 +18,18 @@ This project was developed during the Brainhack School 2026 at Polytechnique Mon
 
 ## Overview
 
-Respiratory motion during MRI acquisition introduces artifacts in k-space that degrade image quality. This is particularly critical for spinal cord imaging. 
-This project aim to simulate breathing-induced motion corruption directly in k-space and trains a 2D U-Net to correct these artifacts. Moreover this project aim to simulate accelerated MRI
-that's are more and more used because MRI has a long acquisition time, so un undersampling factor is also add in k-space as well as some complex Gaussian noise.
+### Context
 
+Respiratory motion during MRI acquisition introduces artifacts in k-space that degrade image quality. This is particularly critical for spinal cord imaging. This project aim to simulate breathing-induced motion corruption directly in k-space for accelerated MRI and trains a 2D U-Net to correct these artifacts. To simulate an accelerated MRI an undersempling factor ans some complex Gaussian noise have been added on the k-space.
 
 Rather than working in image space, the model operates on **complex k-space data** (real + imaginary channels),
 which is more faithful to the actual acquisition process and allows correction before reconstruction.
 
----
-
-## Scientific Background
-
-During MRI acquisition, k-space lines are acquired sequentially over time. Respiratory motion between acquisitions induces a **phase shift** in each k-space line, modeled as:
-
-$$\tilde{K}(k_x, k_y) = K(k_x, k_y) \cdot e^{-j2\pi k_x \cdot d(k_y)}$$
-
-where $d(k_y)$ is the respiratory displacement at the time of acquisition of line $k_y$.
-
-Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian noise**, this produces realistic corrupted k-space data used for supervised training.
-
----
-
-## Pipeline Overview
+### Pipeline Overview
 
 ```mermaid
 flowchart TD
-    A[Clean T2w NIfTI volume\nds005616]:::input
+    A[T2w NIfTI volume: ds005616]:::input
     B[Clean K-space]:::kspace
     C[️Phase Ramp\nMotion : A, f]:::corrupt
     D[Cartesian Undersampling\nFactor R]:::corrupt
@@ -59,51 +48,14 @@ flowchart TD
     F --> G
     G -->|iFFT| H
 
-    classDef input    fill:#4A90D9,stroke:#2C5F8A,color:#fff,rx:8
-    classDef kspace   fill:#7B68EE,stroke:#4B3FA0,color:#fff,rx:8
-    classDef corrupt  fill:#E8A838,stroke:#B07820,color:#fff,rx:8
-    classDef model    fill:#50C878,stroke:#2E8B57,color:#fff,rx:8
+    classDef input    fill:#B497E7,stroke:#2C5F8A,color:#fff,rx:8
+    classDef kspace   fill:#F6CF71,stroke:#4B3FA0,color:#fff,rx:8
+    classDef corrupt  fill:#9EB9F3,stroke:#B07820,color:#fff,rx:8
+    classDef model    fill:#F89C74,stroke:#2E8B57,color:#fff,rx:8
     classDef output   fill:#FF6B6B,stroke:#CC3333,color:#fff,rx:8
 ```
-
 ---
-## Repository Structure
 
-```
-Sarrazin_project/
-│
-├── ds005616/                          # Datait)
-│
-├── src/
-│   ├── Kspace_simulation.py           # K-space corruption pipeline
-│   ├── Utils.py                       # Metrics and utilities
-│   ├── Unet_model.py                  # 2D U-Net architecture
-│   └── Unet_train.py                  # Training on)
-│
-├── notebooks/
-│   ├── Kspace_corruption_simulan_vf.ipynb   # Step-by-step simulation
-│   ├── Unet_inference.ipynb                    # Inference & visualization
-│   └── Unet_analysis.ipynb                   Training curves & metrics
-	Gif.ipynb 				# Breathing motion simulation gif
-│
-├── training_data/
-│   ├── mfest_v2.csv                # Dataset manifest (path, TR, TE, H, W, params)
-│   └── splits.json                    # Train/val/test subject splits (70/15/15)
-│
-├── results/
-│  ├── unet_best.pt               # Best moint
-│  ├── training_history.csv       # Metrics per epoch
-│  └─figures_example/           # Generated figures
-│
-├── train_full.sh                      # SLURM job script (Alliance Canada)
-└── README.md
-```
-# Additional information:
-
--manifest.csv: one row per (subject × slice × corruption combo) with image path, acquisition parameters (TR, TE), original dimensions (H, W), and corruption parameters (A, f, R, SNR).
--splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
-
----
 ## Dataset
 
 This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), available on OpenNeuro:
@@ -115,15 +67,30 @@ This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), availab
 - **Resolution**: 1 mm³
 - **Format**: NIfTI (.nii.gz), BIDS-compliant
 
-### Data access via Datalad
+🚨 Add figures
 
+Data access via Datalad:
 ```bash
 datalad install https://github.com/OpenNeuroDatasets/ds005616.git
 datalad get sub-*/anat/sub-*_T2w.nii.gz
 ```
 ---
 
-### Corruption Parameters
+## Step by step process
+
+### K-space corruption simulation
+
+During a gradient echo (GRE) MRI acquisition, k-space lines are acquired sequentially over time. Respiratory motion between acquisitions induces a **phase shift** in each k-space line, modeled as:
+
+$$\tilde{K}(k_x, k_y) = K(k_x, k_y) \cdot e^{-j2\pi k_x \cdot d(k_y)}$$
+
+where $d(k_y)$ is the respiratory displacement at the time of acquisition of line $k_y$.
+
+Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian noise**, this produces realistic corrupted k-space data that impose several typical artifacts on the reconstruted image.
+
+🚨 Add figures
+
+### Trainning dataset
 
 A training dataset was generated my varying the corruption paramters: 
 
@@ -136,9 +103,7 @@ A training dataset was generated my varying the corruption paramters:
 
 Total combinations: **81 per slice** → 231,417 training samples across 56 subjects.
 
----
-
-## Model Architecture
+### Model Architecture
 
 **2D U-Net** with 3 pooling levels:
 
@@ -160,20 +125,68 @@ Output (2, H, W) — real & imaginary corrected k-space
 - **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5)
 - **Input normalization**: divided by max(|clean k-space|)
 
+### Model trainning
+
+🚨 Add info (time, batch, gpu, server)
+
 ---
 ## Results 
 
+### Model evaluation
 
----
-## Limitations
+🚨 Add figures
 
+### Model inference
+
+🚨 Add figures
+
+### Limitations
 - Motion model is **1D rigid translation** only (no rotation, no non-rigid deformation)
 
+
 ---
+## Repository Structure
 
-## Installation & Training
+```
+Sarrazin_project/
+│
+├── ds005616/                          # Dataset
+│
+├── src/
+│   ├── Kspace_simulation.py           # K-space corruption pipeline
+│   ├── Utils.py                       # Metrics and utilities
+│   ├── Unet_model.py                  # 2D U-Net architecture
+│   └── Unet_train.py                  # Training loop
+│
+├── notebooks/
+│   ├── Kspace_corruption_simulan_vf.ipynb   # Step-by-step simulation
+│   ├── Unet_inference.ipynb                    # Inference & visualization
+│   └── Unet_analysis.ipynb                   Training curves & metrics
+	Gif.ipynb 				# Breathing motion simulation gif
+│
+├── training_data/
+│   ├── mfest_v2.csv                # Dataset manifest (path, TR, TE, H, W, params)
+│   └── splits.json                    # Train/val/test subject splits (70/15/15)
+│
+├── results/
+│  ├── unet_best.pt               # Best moint
+│  ├── training_history.csv       # Metrics per epoch
+│  └─figures_example/           # Generated figures
+│
+├── train_full.sh                      # SLURM job script (Alliance Canada)
+└── README.md
+```
+Additional information:
 
-The following set-up use the server Narval on Alliance Canada, you can change it to the server nam who want to use
+- manifest.csv: one row per (subject × slice × corruption combo) with image path, acquisition parameters (TR, TE), original dimensions (H, W), and corruption parameters (A, f, R, SNR).
+- splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
+
+---
+## Reproductibility 
+
+### Installation & Training
+
+The following set-up use the server Narval on Alliance Canada, you can change it to the server name who want to use
 
 ### 1. Clone the repository
 
@@ -268,7 +281,6 @@ HISTORY_PATH = Path('results/training_history.csv')
 ```
 
 ---
-
 ## References
 
 
