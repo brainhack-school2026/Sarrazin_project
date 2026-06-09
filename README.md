@@ -61,16 +61,20 @@ flowchart TD
 
 ## Dataset
 
-This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), available on OpenNeuro:
+This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), available on:
 
-> [https://openneuro.org/datasets/ds005616/versions/1.1.2](https://openneuro.org/datasets/ds005616/versions/1.1.2)
+- OpenNeuro: [https://openneuro.org/datasets/ds005616/versions/1.1.2](https://openneuro.org/datasets/ds005616/versions/1.1.2)
+- GitHub: https://github.com/OpenNeuroDatasets/ds005616.git
 
+For this project we use: 
 - **Modality**: T2-weighted sagittal whole-spine MRI
 - **Subjects**: 56
 - **Resolution**: 1 mm³
 - **Format**: NIfTI (.nii.gz), BIDS-compliant
 
-🚨 Add figures
+<p align="center">
+  <img src="README_figures/data_exemple.png" width="100">
+</p>
 
 Data access via Datalad:
 ```bash
