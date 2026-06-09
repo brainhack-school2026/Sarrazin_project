@@ -97,6 +97,9 @@ Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian
 
 🚨 Add figures
 
+⚠️ Note: More detailled information obout the simulation process are presented indi the Kspace_corruption_simulation.ipynb notebook.
+See [`notebooks/Kspace_corruption_simulation_vf.ipynb`](notebooks/Kspace_corruption_simulation_vf.ipynb).
+
 ### Trainning dataset
 
 A training dataset was generated my varying the corruption paramters: 
