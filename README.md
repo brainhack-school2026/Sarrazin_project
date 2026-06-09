@@ -72,32 +72,36 @@ flowchart TD
 ```
 Sarrazin_project/
 │
-├── ds005616/                          # Dataset (not tracked by git)
+├── ds005616/                          # Datait)
 │
 ├── src/
 │   ├── Kspace_simulation.py           # K-space corruption pipeline
 │   ├── Utils.py                       # Metrics and utilities
 │   ├── Unet_model.py                  # 2D U-Net architecture
-│   └── Unet_train.py                  # Training loop (online generation)
+│   └── Unet_train.py                  # Training on)
 │
 ├── notebooks/
-│   ├── Kspace_corruption_simulation_vf.ipynb   # Step-by-step simulation
+│   ├── Kspace_corruption_simulan_vf.ipynb   # Step-by-step simulation
 │   ├── Unet_inference.ipynb                    # Inference & visualization
-│   └── Unet_analysis.ipynb                     # Training curves & metrics
+│   └── Unet_analysis.ipynb                   Training curves & metrics
+	Gif.ipynb 				# Breathing motion simulation gif
 │
 ├── training_data/
-│   ├── manit_v2.csv                # Dataset manifest (path, TR, TE, H, W, params)
+│   ├── mfest_v2.csv                # Dataset manifest (path, TR, TE, H, W, params)
 │   └── splits.json                    # Train/val/test subject splits (70/15/15)
 │
 ├── results/
-│   ├── full_run/
-│   │   ├── unet_best.pt               # Best model checkpoint
-│   │   ├── training_history.csv       # Metrics per epoch
-│   └── figures_example/                       # Generated figures
+│  ├── unet_best.pt               # Best moint
+│  ├── training_history.csv       # Metrics per epoch
+│  └─figures_example/           # Generated figures
 │
 ├── train_full.sh                      # SLURM job script (Alliance Canada)
 └── README.md
 ```
+# Additional information:
+
+-manifest.csv: one row per (subject × slice × corruption combo) with image path, acquisition parameters (TR, TE), original dimensions (H, W), and corruption parameters (A, f, R, SNR).
+-splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
 
 ---
 ## Dataset
@@ -155,6 +159,15 @@ Output (2, H, W) — real & imaginary corrected k-space
 - **Optimizer**: Adam (lr=1e-3)
 - **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5)
 - **Input normalization**: divided by max(|clean k-space|)
+
+---
+## Results 
+
+
+---
+## Limitations
+
+- Motion model is **1D rigid translation** only (no rotation, no non-rigid deformation)
 
 ---
 
@@ -253,12 +266,6 @@ Open `notebooks/Unet_analysis.ipynb` and set:
 ```python
 HISTORY_PATH = Path('results/training_history.csv')
 ```
-
----
-
-## Limitations
-
-- Motion model is **1D rigid translation** only (no rotation, no non-rigid deformation)
 
 ---
 
