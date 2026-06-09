@@ -1,0 +1,14 @@
+torch>=2.0
+torchvision
+nibabel
+neurokit2
+pybids
+numpy
+pandas
+scipy
+scikit-image
+matplotlib
+seaborn
+Pillow
+joblib
+tqdm
