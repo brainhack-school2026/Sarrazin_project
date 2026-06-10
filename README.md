@@ -140,7 +140,7 @@ Output (2, H, W) — real & imaginary corrected k-space
 - **Parameters**: ~1.9M
 - **Loss**: L1 (less blurry than MSE)
 - **Optimizer**: Adam (lr=1e-3)
-- **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5)
+- **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5) 🚨 CHECK TO DO
 - **Input normalization**: divided by max(|clean k-space|)
 
 ### Model trainning
