@@ -1,4 +1,4 @@
-# Deep Learning breathing-induced artifact correction on k-space for accelerated MRI
+<h1 align="center">Deep Learning breathing-induced artifact correction on k-space for accelerated MRI</h1>
 
 <p align="center">
   <img src="README_figures/Main_question.png" width="700">
