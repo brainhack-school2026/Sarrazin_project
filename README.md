@@ -9,13 +9,7 @@
 
 Hi!
 
-This project was developed during the Brainhack School 2026 at Polytechnique Montréal.
-
-<a href="https://github.com/Annaelle8">
-  <img src="https://avatars.githubusercontent.com/u/128856434?v=4&size=64" width="100px;" alt=""/>
-  <br /><sub><b>Annaelle8</b></sub>
-</a>
-
+This 1 month project was developed during the Brainhack School 2026 at Polytechnique Montréal.
 
 ---
 
@@ -341,4 +335,11 @@ HISTORY_PATH = Path('results/training_history.csv')
 ---
 ## Author
 
+<a href="https://github.com/Annaelle8">
+  <img src="https://avatars.githubusercontent.com/u/128856434?v=4&size=64" width="100px;" alt=""/>
+  <br /><sub><b>Annaelle8</b></sub>
+</a>
+
 **Annaelle Sarrazin** — Brainhack School 2026
+
+
