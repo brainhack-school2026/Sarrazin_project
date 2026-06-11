@@ -26,6 +26,10 @@ which is more faithful to the actual acquisition process and allows correction b
 
 Can deep learning models correct breathing motion-induced artefact on accelerated MRI from corrupted k-space acquisitions ?
 
+### Main objectives 🚨
+
+### Personal objectives 🚨
+
 ### Pipeline Overview
 
 ```mermaid
@@ -55,6 +59,11 @@ flowchart TD
     classDef model    fill:#F89C74,stroke:#2E8B57,color:#fff,rx:8
     classDef output   fill:#FF6B6B,stroke:#CC3333,color:#fff,rx:8
 ```
+
+### Tools 🚨
+
+### Project deliverables 🚨
+
 ---
 
 ## Dataset
@@ -201,8 +210,6 @@ Script arguments:
 ```
 Sarrazin_project/
 │
-├── ds005616/                          # Dataset
-│
 ├── src/
 │   ├── Kspace_simulation.py           # K-space corruption pipeline
 │   ├── Utils.py                       # Metrics and utilities
@@ -334,8 +341,10 @@ HISTORY_PATH = Path('results/training_history.csv')
 ```
 
 ---
-## References
+## Conclusion 🚨
 
+---
+## References 🚨
 
 ---
 ## Author
