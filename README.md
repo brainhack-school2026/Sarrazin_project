@@ -93,13 +93,19 @@ During a gradient echo (GRE) MRI acquisition, k-space lines are acquired sequent
 
 $$\tilde{K}(k_x, k_y) = K(k_x, k_y) \cdot e^{-j2\pi k_x \cdot d(k_y)}$$
 
-where $d(k_y)$ is the respiratory displacement at the time of acquisition of line $k_y$.
+where $d(k_y)$ is the respiratory displacement at the time of acquisition of line $k_y$. 
+
+The animation below illustrates this process: the respiratory signal (top-left), the k-space being filled line by line with the resulting phase ramp (bottom-left), and the reconstructed image showing motion ghosting artifacts (right).
+
+<p align="center">
+  <img src="gif/gif_realtime_acquisition.gif" width="700">
+</p>
 
 Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian noise**, this produces realistic corrupted k-space data that impose several typical artifacts on the reconstruted image.
 
 🚨 Add figures
 
-⚠️ Note: More detailled information obout the simulation process are provided inside the Kspace_corruption_simulation.ipynb notebook.
+⚠️ Note: More detailled information about the simulation process are provided inside the Kspace_corruption_simulation.ipynb notebook.
 See [`notebooks/Kspace_corruption_simulation_vf.ipynb`](notebooks/Kspace_corruption_simulation_vf.ipynb).
 
 ## Deep learning model
