@@ -187,8 +187,13 @@ Script arguments:
 🚨 Add figures
 
 ### Limitations
-- Motion model is **1D rigid translation** only (no rotation, no non-rigid deformation)
 
+> **Note:** This project was primarily a learning experience in training and applying deep learning to a specific MRI reconstruction problem. The following limitations reflect the simplified assumptions made in the simulation model.
+
+- **1D rigid motion only:** the model simulates translation along the readout direction only, without rotation or non-rigid deformation
+- **Uniform displacement along the spine:** in reality, respiratory motion decreases with distance from the lungs; the cervical spine moves less than the thoracic spine
+- **No B0 field fluctuations:** breathing also induced magnetic field inhomogeneities, which introduces additional  spatially and time-dependent phase errors in k-space not captured here
+- **Simulated data only:** the model was trained and evaluated exclusively on simulated artifacts; validation on real motion-corrupted acquisitions remains to be done
 
 ---
 ## Repository Structure
