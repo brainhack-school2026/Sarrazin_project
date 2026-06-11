@@ -139,15 +139,6 @@ def train_one_epoch(model, loader, optimizer, device):
     model.train()
     total_loss = 0.0
 
-    # for x, y, H_orig, W_orig in loader:
-    #     x, y = x.to(device), y.to(device)
-    #     optimizer.zero_grad()
-    #     pred = model(x)
-    #     loss = nn.functional.l1_loss(pred, y)   # L1 — less blurry than MSE
-    #     loss.backward()
-    #     optimizer.step()
-    #     total_loss += loss.item()
-
     for x, y, H_orig, W_orig in loader:
         x, y = x.to(device), y.to(device)
         optimizer.zero_grad()
@@ -175,7 +166,6 @@ def validate(model, loader, device):
         for x, y, H_orig, W_orig in loader:
             x, y = x.to(device), y.to(device)
             pred = model(x)
-            # loss = nn.functional.l1_loss(pred, y)
             
             mask_val = torch.zeros_like(y) # masked the padding for calculate the loss
             for i in range(x.shape[0]):
@@ -255,8 +245,7 @@ def train(args):
     # ── Model ──────────────────────────────────────────────────────────
     model     = UNet2D(in_channels=2, out_channels=2, base_channels=32).to(device)
     optimizer = Adam(model.parameters(), lr=1e-3)
-    # scheduler = ReduceLROnPlateau(optimizer, patience=5, factor=0.5, verbose=True)
-    scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6) # change the scheduler after bad result with 30 epochs
+    scheduler = CosineAnnealingLR(optimizer, T_max=args.epochs, eta_min=1e-6)
 
     n_params = sum(p.numel() for p in model.parameters())
     print(f"Model parameters: {n_params:,}")
@@ -271,8 +260,7 @@ def train(args):
         train_loss             = train_one_epoch(model, train_loader, optimizer, device)
         val_loss, val_ssim, val_psnr = validate(model, val_loader, device)
 
-        # scheduler.step(val_loss)
-        scheduler.step()  # change the scheduler after bad result with 30 epochs
+        scheduler.step() 
         elapsed = time.time() - t0
 
         row = {
