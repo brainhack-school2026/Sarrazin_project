@@ -117,12 +117,13 @@ A training dataset was generated my varying the corruption paramters:
 
 Total combinations: **81 per slice** → 231,417 training samples across 56 subjects.
 
-🚨 To do: ref for corruption parameters value
-References:
-The motion amplitude `A` (in pixels, assuming 1 mm isotropic resolution) is chosen to span the range of respiratory spinal cord displacement measured *in vivo*. Studies have shown that breathing induces spinal cord displacements of up to **10 mm** in the antorior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to **A = 1–10 px**.
+🚨 Choice of the simulation parameters:
+
+- The motion amplitude `A` (in pixels, assuming 1 mm isotropic resolution) is chosen to span the range of respiratory spinal cord displacement measured *in vivo*. Studies have shown that breathing induces spinal cord displacements of up to **10 mm** in the antorior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to **A = 1–10 px**. Th
 *Reference:* Verma, T. and Cohen-Adad, J. (2014), Effect of respiration on the B0 field in the human spinal cord at 3T. Magn. Reson. Med., 72: 1629-1636. https://doi.org/10.1002/mrm.25075.
-(12-20hz: https://www.mangalam.nl/wp-content/uploads/2018/12/Breathing-Pattern.pdf)
-SNR (15, 20, 25) *Reference:* McRobbie DW, Moore EA, Graves MJ, Prince MR. What You Set is What You Get: Basic Image Optimization. In: MRI from Picture to Proton. Cambridge University Press; 2017:67-80. 
+- The average range of breathing frequence for adults is 12-20hz (https://www.mangalam.nl/wp-content/uploads/2018/12/Breathing-Pattern.pdf)
+- A min good SNR for interpretible image is 20 DB.
+*Reference:* McRobbie DW, Moore EA, Graves MJ, Prince MR. What You Set is What You Get: Basic Image Optimization. In: MRI from Picture to Proton. Cambridge University Press; 2017:67-80. 
 -> "As a rule-of-thumb an SNR higher than 20:1 offers little image quality advantage to the observer"
 
 ### Model Architecture
