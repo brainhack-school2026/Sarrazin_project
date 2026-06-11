@@ -28,6 +28,10 @@ Respiratory motion during MRI acquisition introduces artifacts in k-space that d
 Rather than working in image space, the model operates on **complex k-space data** (real + imaginary channels),
 which is more faithful to the actual acquisition process and allows correction before reconstruction.
 
+### Main question
+
+Can deep learning models correct breathing motion-induced artefact on accelerated MRI from corrupted k-space acquisitions ?
+
 ### Pipeline Overview
 
 ```mermaid
