@@ -150,15 +150,30 @@ Input (2, H, W) — real & imaginary corrupted k-space
 Output (2, H, W) — real & imaginary corrected k-space
 ```
 
-- **Parameters**: ~1.9M
-- **Loss**: L1 (less blurry than MSE)
-- **Optimizer**: Adam (lr=1e-3)
-- **Scheduler**: ReduceLROnPlateau (patience=5, factor=0.5) 🚨 CHECK TO DO
-- **Input normalization**: divided by max(|clean k-space|)
+Parameters:
+- Parameters: ~1.9M
+- Optimizer: Adam (lr=1e-3)
+- Scheduler: CosineAnnealingLR (T_max=20, eta_min=1e-6)
+- Loss:  L1 (masked to valid region)
 
 ### Model trainning
 
-🚨 Add info (time, batch, gpu, server)
+Training was performed on **Alliance Canada (Narval)** using the SLURM job scheduler:
+- GPU: 1× NVIDIA A100 (40 GB)
+- CPUs: 8
+- RAM: 32 GB
+- time=36:00:00
+- Epochs: 20
+- Batch size: 32
+- Framework: PyTorch 2.6
+
+Script arguments:
+- `--data_root`: Absolute path to the project root
+- `--manifest`: Path to the dataset manifest CSV
+- `--splits`: Path to the train/val/test split JSON
+- `--output`: Output directory for checkpoints and history
+- `--epochs`: Number of training epochs
+- `--batch_size`: Batch size
 
 ---
 ## Results 
