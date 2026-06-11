@@ -345,7 +345,13 @@ HISTORY_PATH = Path('results/training_history.csv')
 
 ---
 ## References 🚨
-
+- Vannesjo, S. J., Miller, K. L., Clare, S., & Tracey, I. (2018). _Spatiotemporal characterization of breathing-induced B0 field fluctuations in the cervical spinal cord at 7T_. NeuroImage, 167, 191–202. https://doi.org/10.1016/j.neuroimage.2017.11.031
+- Makowski, D., Pham, T., Lau, Z.J., et al. (2021). _NeuroKit2: A Python Toolbox for Neurophysiological Signal Processing_. Behavior Research Methods. https://doi.org/10.3758/s13428-020-01516-y
+- Verma, T. and Cohen-Adad, J. (2014). _Effect of respiration on the B0 field in the human spinal cord at 3T_. Magnetic Resonance in Medicine, 72: 1629–1636. https://doi.org/10.1002/mrm.25075
+- Sapra A, Malik A, Bhandari P. Vital Sign Assessment. StatPearls (internet). Treasure Island (FL): StatPearls Publishing; 2026 Jan-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK553213/
+- McRobbie, D.W., Moore, E.A., Graves, M.J., Prince, M.R. (2017). _MRI from Picture to Proton_. Cambridge University Press (digital acces). Available from: https://www.cambridge.org/core/books/mri-from-picture-to-proton/3ADC814FF8FC6A78A54D37746F806D5A
+- Kastryulin, S., Zakirov, J., Pezzotti, N., & Dylov, D. V. (2022). Image quality assessment for magnetic resonance imaging. Philips Research; Skolkovo Institute of Science and Technology; Eindhoven University of Technology. https://arxiv.org/abs/2203.07809
+  
 ---
 ## Author
 
