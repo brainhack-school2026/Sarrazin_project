@@ -87,9 +87,7 @@ datalad get sub-*/anat/sub-*_T2w.nii.gz
 ```
 ---
 
-## Step by step process
-
-### K-space corruption simulation
+## K-space corruption simulation
 
 During a gradient echo (GRE) MRI acquisition, k-space lines are acquired sequentially over time. Respiratory motion between acquisitions induces a **phase shift** in each k-space line, modeled as:
 
@@ -104,6 +102,8 @@ Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian
 ⚠️ Note: More detailled information obout the simulation process are provided inside the Kspace_corruption_simulation.ipynb notebook.
 See [`notebooks/Kspace_corruption_simulation_vf.ipynb`](notebooks/Kspace_corruption_simulation_vf.ipynb).
 
+## Deep learning model
+
 ### Trainning dataset
 
 A training dataset was generated my varying the corruption paramters: 
@@ -117,14 +117,22 @@ A training dataset was generated my varying the corruption paramters:
 
 Total combinations: **81 per slice** → 231,417 training samples across 56 subjects.
 
-🚨 Choice of the simulation parameters:
+Choice of simulation parameters:
 
-- The motion amplitude `A` (in pixels, assuming 1 mm isotropic resolution) is chosen to span the range of respiratory spinal cord displacement measured *in vivo*. Studies have shown that breathing induces spinal cord displacements of up to **10 mm** in the antorior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to **A = 1–10 px**. Th
-*Reference:* Verma, T. and Cohen-Adad, J. (2014), Effect of respiration on the B0 field in the human spinal cord at 3T. Magn. Reson. Med., 72: 1629-1636. https://doi.org/10.1002/mrm.25075.
-- The average range of breathing frequence for adults is 12-20hz (https://www.mangalam.nl/wp-content/uploads/2018/12/Breathing-Pattern.pdf)
-- A min good SNR for interpretible image is 20 DB.
-*Reference:* McRobbie DW, Moore EA, Graves MJ, Prince MR. What You Set is What You Get: Basic Image Optimization. In: MRI from Picture to Proton. Cambridge University Press; 2017:67-80. 
--> "As a rule-of-thumb an SNR higher than 20:1 offers little image quality advantage to the observer"
+- **Motion amplitude A:** The motion amplitude A (in pixels, assuming 1 mm isotropic resolution) spans the physiological range of respiratory spinal cord displacement measured in vivo. Studies have shown that breathing induces spinal cord displacements of up to 10 mm in the anterior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to A = 1–10 px. We choose to use 2, 5 et 8 px displacement to cover a large range of displacement, 8px being already an important displacement, we choose to not done the 10px being rare et intense above all that the displacement here are applied to all the image. 
+
+> *Verma, T. and Cohen-Adad, J. (2014). Effect of respiration on the B0 field in the human spinal cord at 3T. Magnetic Resonance in Medicine, 72: 1629–1636. https://doi.org/10.1002/mrm.25075*
+
+- **Respiratory rate f:** The normal respiratory rate for adults at rest ranges from 12 to 20 breaths/min. We use f = 12, 15, 18 breaths/min to cover this physiological range.
+
+> *Sapra A, Malik A, Bhandari P. Vital Sign Assessment. [Updated 2023 May 1]. In: StatPearls [Internet]. Treasure Island (FL): StatPearls Publishing; 2026 Jan-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK553213/*
+
+- **Undersampling factor R:** R = 2, 4, 6 corresponds to acquiring around 50%, 25% and 17% of k-space lines respectively, covering the typical acceleration factors used in clinical accelerated MRI protocols.
+
+- **Signal-to-noise ratio SNR:** We simulate SNR values of 15, 20 and 25 dB. An SNR above 20 dB is generally considered sufficient for diagnostic image quality.
+
+> *McRobbie, D.W., Moore, E.A., Graves, M.J., Prince, M.R. (2017). MRI from Picture to Proton. Cambridge University Press. — "As a rule-of-thumb an SNR higher than 20:1 offers little image quality advantage to the observer"*
+
 
 ### Model Architecture
 
