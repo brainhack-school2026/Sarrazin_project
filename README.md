@@ -374,7 +374,7 @@ HISTORY_PATH = Path('results/training_history.csv')
 
 Deep learning seems promissing to effectively correct breathing-induced motion artifacts in accelerated MRI k-space.
 
-On a personal level, this project was a great opportunity to learn how works depp learning, and how train and evaluate a deep learning model for a specific problem. I particularly enjoyed understanding the connections between MRI physics, k-space signal processing, and deep learning. I looking forward to maybe continue this work in the futur.
+On a personal level, this project was a great opportunity to learn how works deep learning, and how to train and evaluate a deep learning model for a specific problem. I enjoyed understanding the connections between MRI physics, k-space signal processing, and deep learning. I am looking forward to continue this work in the futur.
 
 ---
 ## References 🚨
