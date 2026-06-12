@@ -239,19 +239,33 @@ We observe great improvement:
 
 #### Artifacts correction
 
-On the following figures, you can see the predicted k-space along with the grung truth and the corrupted k-space:
+The following figure shows the predicted k-space alongside the ground truth and the corrupted k-space:
+
 <p align="center">
-  <img src="README_figures/sagital_kspace_inference.png" width="100">
+  <img src="README_figures/sagital_kspace_inference.png" width="800">
 </p>
 
-After reconstruction of the previour k-space, you can see the corrected image predict by the model. We ob the following figures, you can see the predicted k-space along with the grung truth and the corrupted k-space:
+After reconstruction, the corrected image predicted by the model shows a clear reduction of motion ghosting artifacts compared to the corrupted input:
+
 <p align="center">
-  <img src="README_figures/sagital_kspace_inference.png" width="100">
+  <img src="README_figures/sagital_inference_example2.png" width="800">
 </p>
 
-#### Motion severity comparision
+#### Motion severity comparison
+
+The following figure shows the model's correction across different motion amplitudes (A = 2, 5, 8 px) to assess its robustness to varying artifact severity. The three corrected images all shows a clear reduction of the motion artifacts:
+
+<p align="center">
+  <img src="README_figures/motion_inference_comparision_ex1.png" width="800">
+</p>
 
 #### Artifacts correction on axial slices
+
+Finally, you can see the correction on axial views. The results are particularly interresting because the spinal cord which had almost disappeared in the corrupted axial slices due to ghosting artifacts is successfully retrieved after model correction:
+
+<p align="center">
+  <img src="README_figures/axial_inference_example1.png" width="800">
+</p>
 
 ### Limitations
 
