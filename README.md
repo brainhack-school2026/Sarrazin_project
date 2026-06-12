@@ -136,7 +136,9 @@ The animation below illustrates this process: the respiratory signal (top-left),
 
 Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian noise**, this produces realistic corrupted k-space data that impose several typical artifacts on the reconstruted image.
 
-🚨 Add figures
+<p align="center">
+  <img src="README_figures/undersampled_and_noise_k-space.png" width="300">
+</p>
 
 ⚠️ Note: More detailled information about the simulation process are provided inside the Kspace_corruption_simulation.ipynb notebook.
 See [`notebooks/Kspace_corruption_simulation_vf.ipynb`](notebooks/Kspace_corruption_simulation_vf.ipynb).
@@ -219,7 +221,19 @@ Script arguments:
 
 ### Model evaluation
 
-🚨 Add figures
+The train and loss curves shonx there where no overfiiting during training:
+<p align="center">
+  <img src="results/figures/loss_curves.png" width="700">
+</p>
+
+The quantitative images quality metrics SSIM et PSNR shown that the model was learning epoch by epoch:
+<p align="center">
+  <img src="results/figures/metrics_curves.png" width="800">
+</p>
+
+We observe great improvement:
+- SSIM improved from 0.38 → 0.63 
+- PSNR improved from 20.9 → 24.1 dB
 
 ### Model inference
 
