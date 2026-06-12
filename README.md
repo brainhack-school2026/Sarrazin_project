@@ -26,9 +26,21 @@ which is more faithful to the actual acquisition process and allows correction b
 
 Can deep learning models correct breathing motion-induced artefact on accelerated MRI from corrupted k-space acquisitions ?
 
-### Main objectives 🚨
+### Main objectives
 
-### Personal objectives 🚨
+The main objectives of my project were:
+- Develop a simulation pipeline to generate corrupted k-space with respiratory motion, cartesian undersampling and gaussian noise
+- Generate a training dataset by varying the motion (breathing-cycle) amplitude and frequency, the undersampling factor and the noise level
+- Train a deep learning model for artifact correction in k-space
+- Evaluate the model performance using quantitative image quality metrics
+
+### Personal objectives
+
+My personal objectives with this project were:
+- Learn how deep-learning works
+- Learn how to train a model
+- Learn how to use high computational ressources
+- Learn how to adapt a classical model (2D U-Net) on a specific project
 
 ### Pipeline Overview
 
