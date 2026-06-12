@@ -237,7 +237,21 @@ We observe great improvement:
 
 ### Model inference
 
-🚨 Add figures
+#### Artifacts correction
+
+On the following figures, you can see the predicted k-space along with the grung truth and the corrupted k-space:
+<p align="center">
+  <img src="README_figures/sagital_kspace_inference.png" width="100">
+</p>
+
+After reconstruction of the previour k-space, you can see the corrected image predict by the model. We ob the following figures, you can see the predicted k-space along with the grung truth and the corrupted k-space:
+<p align="center">
+  <img src="README_figures/sagital_kspace_inference.png" width="100">
+</p>
+
+#### Motion severity comparision
+
+#### Artifacts correction on axial slices
 
 ### Limitations
 
