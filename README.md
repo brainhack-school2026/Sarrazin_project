@@ -72,9 +72,27 @@ flowchart TD
     classDef output   fill:#FF6B6B,stroke:#CC3333,color:#fff,rx:8
 ```
 
-### Tools 🚨
+### Tools
 
-### Project deliverables 🚨
+To ensure that my project stays open and reproductible I use several tools that are widely use in neuroimaging MRI research:
+- OpenNeuro, BIDS format and Datalab: Download only the necessary files of my dataset in a standardized way
+- Python and jupyter notebooks: Implement my simulation, processing, and deep learning model training and evaluation pipelines
+- Bash: Automate management of my datasets and access advanced computing resources
+- Alliance of Canada: Train my deep learning model using high-performance (GPU-accelerated) computing
+- GitHub: Document and share my project
+
+### Deliverables
+
+The main deliverable of this project is a fully documented GitHub repository containing all necessary files to:
+
+- **Reproduce the full project:** from simulation to training to inference
+- **Use the simulation pipeline only:** generate motion-corrupted k-space data for your own dataset
+- **Use the pre-trained model directly:** run inference without retraining
+- **Retrain the model:** on a different dataset or with different parameters
+
+This repository includes step-by-step instructions to ensure full reproducibility.
+
+> See the **[Repository Structure](#repository-structure)** and **[Reproducibility Guide](#reproducibility-guide)** sections at the end of this README for a detailed description of the repository contents and how to reproduce any step of this project.
 
 ---
 
@@ -254,7 +272,7 @@ Additional information:
 - splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
 
 ---
-## Reproductibility 
+## Reproductibility Guide 
 
 ### Installation & Training
 
