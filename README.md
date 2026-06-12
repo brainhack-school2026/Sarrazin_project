@@ -272,7 +272,7 @@ Additional information:
 - splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
 
 ---
-## Reproductibility Guide 
+## Reproducibility Guide 
 
 ### Installation & Training
 
@@ -369,9 +369,12 @@ Open `notebooks/Unet_analysis.ipynb` and set:
 ```python
 HISTORY_PATH = Path('results/training_history.csv')
 ```
-
 ---
-## Conclusion 🚨
+## Conclusion
+
+Deep learning seems promissing to effectively correct breathing-induced motion artifacts in accelerated MRI k-space.
+
+On a personal level, this project was a great opportunity to learn how works depp learning, and how train and evaluate a deep learning model for a specific problem. I particularly enjoyed understanding the connections between MRI physics, k-space signal processing, and deep learning. I looking forward to maybe continue this work in the futur.
 
 ---
 ## References 🚨
