@@ -101,7 +101,7 @@ This project uses the **Whole-Spine Anatomical MRI dataset** (ds005616), availab
 - GitHub: https://github.com/OpenNeuroDatasets/ds005616.git
 
 For this project we use: 
-- **Modality**: T2-weighted sagittal whole-spine MRI
+- **Modality**: T2-weighted whole-spine MRI
 - **Subjects**: 56
 - **Resolution**: 1 mm³
 - **Format**: NIfTI (.nii.gz), BIDS-compliant
