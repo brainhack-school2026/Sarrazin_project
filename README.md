@@ -17,10 +17,9 @@ This 1 month project was developed during the Brainhack School 2026 at Polytechn
 
 ### Context
 
-Respiratory motion during MRI acquisition introduces artifacts in k-space that degrade image quality. This is particularly critical for spinal cord imaging. This project aim to simulate breathing-induced motion corruption directly in k-space for accelerated MRI and trains a 2D U-Net to correct these artifacts. To simulate an accelerated MRI an undersempling factor ans some complex Gaussian noise have been added on the k-space.
+Respiratory motion during MRI acquisition introduces artifacts in k-space that degrade image quality. This is particularly critical for spinal cord imaging. This project aim to simulate breathing-induced motion corruption directly in k-space for accelerated MRI and trains a 2D U-Net to correct these artifacts.
 
-Rather than working in image space, the model operates on **complex k-space data** (real + imaginary channels),
-which is more faithful to the actual acquisition process and allows correction before reconstruction.
+Rather than working in image space, the model operates on **complex k-space data** (real + imaginary channels), which is more faithful to the actual acquisition process and allows correction before reconstruction.
 
 ### Main question
 
@@ -89,8 +88,6 @@ The main deliverable of this project is a fully documented GitHub repository con
 - **Use the simulation pipeline only:** generate motion-corrupted k-space data for your own dataset
 - **Use the pre-trained model directly:** run inference without retraining
 - **Retrain the model:** on a different dataset or with different parameters
-
-This repository includes step-by-step instructions to ensure full reproducibility.
 
 > See the **[Repository Structure](#repository-structure)** and **[Reproducibility Guide](#reproducibility-guide)** sections at the end of this README for a detailed description of the repository contents and how to reproduce any step of this project.
 
