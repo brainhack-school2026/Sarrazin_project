@@ -131,7 +131,7 @@ The animation below illustrates this process: the respiratory signal (top-left),
   <img src="gif/gif_realtime_acquisition.gif" width="700">
 </p>
 
-Combined with **Cartesian undersampling** (acceleration factor R) and **Gaussian noise**, this produces realistic corrupted k-space data that impose several typical artifacts on the reconstruted image.
+Combined with **Cartesian undersampling** (acceleration factor R) and **complex Gaussian noise**, this produces realistic corrupted k-space data for accelerated MRI that impose several typical artifacts on the reconstruted image.
 
 <p align="center">
   <img src="README_figures/undersampled_and_noise_k-space.png" width="300">
