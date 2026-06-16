@@ -218,17 +218,17 @@ Script arguments:
 
 ### Model evaluation
 
-The train and loss curves shonx there where no overfiiting during training:
+The train and loss curves show no overfiiting during training, both curves decrease together throughout the 20 epochs:
 <p align="center">
   <img src="results/figures/loss_curves.png" width="700">
 </p>
 
-The quantitative images quality metrics SSIM et PSNR shown that the model was learning epoch by epoch:
+The quantitative images quality metrics SSIM et PSNR confirm that the model improves consistently epoch by epoch:
 <p align="center">
   <img src="results/figures/metrics_curves.png" width="800">
 </p>
 
-We observe great improvement:
+We observe great improvement on the validation set:
 - SSIM improved from 0.38 → 0.63 
 - PSNR improved from 20.9 → 24.1 dB
 
@@ -268,10 +268,10 @@ Finally, you can see the correction on axial views. The results are particularly
 
 > **Note:** This project was primarily a learning experience in training and applying deep learning to a specific MRI reconstruction problem. The following limitations reflect the simplified assumptions made in the simulation model.
 
-- **1D rigid motion only:** the model simulates translation along the readout direction only, without rotation or non-rigid deformation
-- **Uniform displacement along the spine:** in reality, respiratory motion decreases with distance from the lungs; the cervical spine moves less than the thoracic spine
-- **No B0 field fluctuations:** breathing also induced magnetic field inhomogeneities, which introduces additional  spatially and time-dependent phase errors in k-space not captured here
-- **Simulated data only:** the model was trained and evaluated exclusively on simulated artifacts; validation on real motion-corrupted acquisitions remains to be done
+- 1D rigid translation only along the readout direction -> no rotation, no non-rigid deformation
+- Uniform displacement along the spine -> in reality, respiratory motion decreases with distance from the lungs
+- No B0 field fluctuations induced by breathing
+- Simulated data only -> the model was trained and evaluated exclusively on simulated artifacts
 
 ---
 ## Repository Structure
