@@ -289,17 +289,19 @@ Sarrazin_project/
 │   ├── Kspace_corruption_simulan_vf.ipynb   # Step-by-step simulation
 │   ├── Unet_inference.ipynb                    # Inference & visualization
 │   ├── Unet_analysis.ipynb                   Training curves & metrics
-│	└── Kspace_gif.ipynb 				# Breathing motion simulation gif
+│	  └── Kspace_gif.ipynb 				# Breathing motion simulation gif
 │
 ├── training_data/
 │   ├── manifest.csv                # Dataset manifest (path, TR, TE, H, W, params)
 │   └── splits.json                    # Train/val/test subject splits (70/15/15)
 │
 ├── results/
-│  ├── unet_best.pt               # Best model
-│  ├── training_history.csv       # Metrics per epoch
+│   ├── unet_best.pt               # Best model
+│   ├── training_history.csv       # Metrics per epoch
+│   ├── figures/                  # Training evaluation curves
 │
-├── README_figures/ 			#  Figures and images displayed in this README.
+├── README_figures/ 			#  Figures and images displayed in this README
+├── gif/ 			        #  Breathing motion simulation gif displayed in this README
 │
 ├── train_full.sh                      # SLURM job script (Alliance Canada)
 ├── requirements.txt 				   # Configuration file
