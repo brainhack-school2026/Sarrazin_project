@@ -157,7 +157,7 @@ Total combinations: **81 per slice** → 231,417 training samples across 56 subj
 
 Choice of simulation parameters:
 
-- **Motion amplitude A:** The motion amplitude A (in pixels, assuming 1 mm isotropic resolution) spans the physiological range of respiratory spinal cord displacement measured in vivo. Studies have shown that breathing induces spinal cord displacements of up to 10 mm in the anterior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to A = 1–10 px. We choose to use 2, 5 et 8 px displacement to cover a large range of displacement, 8px being already an important displacement, we choose to not done the 10px being rare et intense above all that the displacement here are applied to all the image. 
+- **Motion amplitude A:** The motion amplitude A (in pixels, assuming 1 mm isotropic resolution) spans the physiological range of respiratory spinal cord displacement measured in vivo. Studies have shown that breathing induces spinal cord displacements are up to 10 mm in the anterior-posterior direction at 3T. At 1 mm/px resolution (ds005616), this translates to A = 1–10 px. I choose to use 2, 5 et 8 px displacement to cover a large range of displacement, 8px being already an important displacement, I choose to not done the 10px being rare et intense above all that the displacement here are applied to the whole image. 
 
 > *Verma, T. and Cohen-Adad, J. (2014). Effect of respiration on the B0 field in the human spinal cord at 3T. Magnetic Resonance in Medicine, 72: 1629–1636. https://doi.org/10.1002/mrm.25075*
 
@@ -169,7 +169,7 @@ Choice of simulation parameters:
 
 - **Signal-to-noise ratio SNR:** We simulate SNR values of 15, 20 and 25 dB. An SNR above 20 dB is generally considered sufficient for diagnostic image quality.
 
-> *McRobbie, D.W., Moore, E.A., Graves, M.J., Prince, M.R. (2017). MRI from Picture to Proton. Cambridge University Press. — "As a rule-of-thumb an SNR higher than 20:1 offers little image quality advantage to the observer"*
+> *McRobbie, D.W., Moore, E.A., Graves, M.J., Prince, M.R. (2017). MRI from Picture to Proton. Cambridge University Press.
 
 
 ### Model Architecture
@@ -179,7 +179,7 @@ Choice of simulation parameters:
 ```
 Input (2, H, W) — real & imaginary corrupted k-space
     │
-    ├── Encoder: 32 → 64 → 128 → 256 (bottleneck)
+    ├── Encoder: 32 → 64 → 128 → 256
     │   MaxPool2d between levels
     │
     ├── Decoder: 256 → 128 → 64 → 32
@@ -209,7 +209,7 @@ Script arguments:
 - `--data_root`: Absolute path to the project root
 - `--manifest`: Path to the dataset manifest CSV
 - `--splits`: Path to the train/val/test split JSON
-- `--output`: Output directory for checkpoints and history
+- `--output`: Output directory
 - `--epochs`: Number of training epochs
 - `--batch_size`: Batch size
 
