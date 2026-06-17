@@ -312,7 +312,7 @@ Sarrazin_project/
 
 ### Installation & Training
 
-The following set-up use the server Narval on Alliance Canada, you can change it to the server name who want to use
+The following set-up use the server Narval on Alliance Canada, you can change it to the server name you want to use
 
 ### 1. Clone the repository
 
