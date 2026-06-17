@@ -424,7 +424,7 @@ On a personal level, this project was a great opportunity to learn how works dee
 - Verma, T. and Cohen-Adad, J. (2014). _Effect of respiration on the B0 field in the human spinal cord at 3T_. Magnetic Resonance in Medicine, 72: 1629–1636. https://doi.org/10.1002/mrm.25075
 - Sapra A, Malik A, Bhandari P. Vital Sign Assessment. StatPearls (internet). Treasure Island (FL): StatPearls Publishing; 2026 Jan-. Available from: https://www.ncbi.nlm.nih.gov/books/NBK553213/
 - McRobbie, D.W., Moore, E.A., Graves, M.J., Prince, M.R. (2017). _MRI from Picture to Proton_. Cambridge University Press (digital acces). Available from: https://www.cambridge.org/core/books/mri-from-picture-to-proton/3ADC814FF8FC6A78A54D37746F806D5A
-- Kastryulin, S., Zakirov, J., Pezzotti, N., & Dylov, D. V. (2022). Image quality assessment for magnetic resonance imaging. Philips Research; Skolkovo Institute of Science and Technology; Eindhoven University of Technology. https://arxiv.org/abs/2203.07809
+- Griswold, M.A., Jakob, P.M., Heidemann, R.M., Nittka, M., Jellus, V., Wang, J., Kiefer, B. and Haase, A. (2002), Generalized autocalibrating partially parallel acquisitions (GRAPPA). Magn. Reson. Med., 47: 1202-1210. https://doi.org/10.1002/mrm.10171
   
 ---
 ## Author
