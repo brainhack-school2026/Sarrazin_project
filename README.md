@@ -307,11 +307,6 @@ Sarrazin_project/
 ├── requirements.txt 				   # Configuration file
 └── README.md
 ```
-Additional information:
-
-- manifest.csv: one row per (subject × slice × corruption combo) with image path, acquisition parameters (TR, TE), original dimensions (H, W), and corruption parameters (A, f, R, SNR).
-- splits.json: Reproducible subject split: 70% train / 15% val / 15% test fixed at random seed 42 -> ensures no data leakage between sets.
-
 ---
 ## Reproducibility Guide 
 
