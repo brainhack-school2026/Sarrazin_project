@@ -1,15 +1,7 @@
 """
 unet_train.py
 =============
-Online dataset generation + U-Net training loop.
-
-Usage (local test):
-    python unet_train.py --manifest training_data/manifest.csv \
-                         --splits   training_data/splits.json  \
-                         --output   results/ --epochs 5 --batch_size 4
-
-Usage (Alliance Canada):
-    sbatch train.sh
+Online training dataset generation + U-Net training loop.
 """
 
 import argparse
@@ -31,7 +23,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from Kspace_simulation import (
     load_slice, apply_motion_line_by_line,
     make_undersampling_mask, apply_undersampling,
-    add_noise, kspace_to_image,
+    add_noise, kspace_to_image
 )
 from Utils import compute_metrics, make_seed
 from Unet_model import UNet2D
@@ -46,23 +38,16 @@ class OnlineMRIDataset(Dataset):
 
     Each __getitem__ call:
       1. Loads a clean NIfTI slice
-      2. Samples random corruption parameters from the grid
-      3. Applies corruption on-the-fly
-      4. Returns (corrupted_kspace_2ch, clean_image) as tensors
-
-    This means the model sees a different corrupted version
-    of each slice at every epoch — better generalization than
-    pre-generated data, zero storage overhead.
+      2. Get corruption parameters from the manifest.csv
+      3. Applies corruption
+      4. Returns (corrupted_kspace_2ch, corrected_kspace_2ch) as tensors
 
     Parameters
     ----------
     manifest : pd.DataFrame
-        One row per (subject, slice) with columns: path, slice, TR, TE
+        One row per (subject, slice)
     axis : int
         Slice orientation (0=sagittal for ds005616)
-    augment : bool
-        If True: sample random params each call (training)
-        If False: use fixed params A=5, f=15, R=2, SNR=20 (val/test)
     """
 
     def __init__(self, manifest, data_root, axis=0):
@@ -125,7 +110,7 @@ class OnlineMRIDataset(Dataset):
         x = x / scale
         y = y / scale
 
-        # À la fin, retourner aussi H et W originaux
+        # At the end, return original H and W for zero-padding mask
         H_orig = int(row["H"])
         W_orig = int(row["W"])
 
@@ -144,7 +129,7 @@ def train_one_epoch(model, loader, optimizer, device):
         optimizer.zero_grad()
         pred = model(x)
 
-        # Masque padding
+        # padding mask
         mask = torch.zeros_like(y)
         for i in range(x.shape[0]):
             h, w = int(H_orig[i]), int(W_orig[i])
@@ -175,7 +160,6 @@ def validate(model, loader, device):
             
             total_loss += loss.item()
 
-        
             for i in range(pred.shape[0]):
                 pred_np = pred[i].cpu().numpy()
                 pred_kspace = pred_np[0] + 1j * pred_np[1]
@@ -189,7 +173,7 @@ def validate(model, loader, device):
                 gt_img   /= norm
                 pred_img /= norm
 
-                # ── Masquer le padding ────────────────────────────────
+                # ── Padding mask ────────────────────────────────
                 h = int(H_orig[i])
                 w = int(W_orig[i])
                 gt_crop   = gt_img[:h, :w]

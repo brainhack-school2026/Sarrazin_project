@@ -27,8 +27,6 @@ class ConvBlock(nn.Module):
     def forward(self, x):
         return self.block(x)
 
-    
-
 
 class UNet2D(nn.Module):
     """
@@ -42,7 +40,7 @@ class UNet2D(nn.Module):
     in_channels : int
         2 — real and imaginary parts of corrupted k-space
     out_channels : int
-        1 — real and imaginary parts of corrected k-space
+        2 — real and imaginary parts of corrected k-space
     base_channels : int
         Number of filters in the first encoder block.
         Doubles at each level: 32 → 64 → 128 → 256 (bottleneck)
@@ -72,22 +70,6 @@ class UNet2D(nn.Module):
         self.dec1  = ConvBlock(b * 2, b)        # b + b skip
 
         self.out_conv = nn.Conv2d(b, out_channels, kernel_size=1)
-
-    # def forward(self, x):
-    #     # Encoder
-    #     e1 = self.enc1(x)
-    #     e2 = self.enc2(self.pool(e1))
-    #     e3 = self.enc3(self.pool(e2))
-
-    #     # Bottleneck
-    #     b  = self.bottleneck(self.pool(e3))
-
-    #     # Decoder with skip connections
-    #     d3 = self.dec3(torch.cat([self.up3(b),  e3], dim=1))
-    #     d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
-    #     d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
-
-    #     return self.out_conv(d1)
 
     def forward(self, x):
         # ── Pad to multiple of 8 (2^3 pooling levels) ────────────────

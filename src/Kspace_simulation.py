@@ -11,7 +11,7 @@ from skimage.metrics import peak_signal_noise_ratio as psnr
 ### 1. Load one slice fron the dataset — ds005616 ---------------------------------------------------------------------------------------
 def load_slice(data, slice_idx=None, axis=0):
     """
-    Extract a 2D slice from a 3D (or 4D) MRI volume and apply preprocessing.
+    Extract a 2D slice from a 3 MRI volume and apply preprocessing.
 
     Parameters
     ----------
@@ -102,7 +102,7 @@ def get_breathing_signal(ny, TR, TE, respiratory_rate=15, method="sinusoidal", s
     '''
 
     duration      = ny * TR          # total duration (s)
-    sampling_rate = 100              # always 100 Hz
+    sampling_rate = 100             
 
     rsp = nk.rsp_simulate(
         duration         = int(duration),
@@ -125,7 +125,6 @@ def get_breathing_signal(ny, TR, TE, respiratory_rate=15, method="sinusoidal", s
     # Normaliser à [-1, 1]
     rsp_norm  = rsp_resampled / (np.max(np.abs(rsp_resampled)) + 1e-8)
     
-
     return rsp_norm, t_ky
 
 def breathing_simu_comparison (TR, sampling_rate=100, duration=30, respiratory_rate=15, method="sinusoidal"):
