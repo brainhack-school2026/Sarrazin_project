@@ -418,7 +418,7 @@ Deep learning seems promissing to effectively correct breathing-induced motion a
 On a personal level, this project was a great opportunity to learn how works deep learning, and how to train and evaluate a deep learning model for a specific problem. I enjoyed understanding the connections between MRI physics, k-space signal processing, and deep learning. I am looking forward to continue this work in the futur.
 
 ---
-## References 🚨
+## References
 - Vannesjo, S. J., Miller, K. L., Clare, S., & Tracey, I. (2018). _Spatiotemporal characterization of breathing-induced B0 field fluctuations in the cervical spinal cord at 7T_. NeuroImage, 167, 191–202. https://doi.org/10.1016/j.neuroimage.2017.11.031
 - Makowski, D., Pham, T., Lau, Z.J., et al. (2021). _NeuroKit2: A Python Toolbox for Neurophysiological Signal Processing_. Behavior Research Methods. https://doi.org/10.3758/s13428-020-01516-y
 - Verma, T. and Cohen-Adad, J. (2014). _Effect of respiration on the B0 field in the human spinal cord at 3T_. Magnetic Resonance in Medicine, 72: 1629–1636. https://doi.org/10.1002/mrm.25075
